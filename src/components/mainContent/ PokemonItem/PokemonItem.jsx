@@ -11,8 +11,8 @@ const PokemonItem = (props) => {
     return (
         <div className={classes.itemBlock}>
 
-            {/*<img src={props.info.sprites.front_shiny}/>*/}
-            <div>{props.pokemon.name}</div>
+            <img src={props.info.sprites.front_default}/>
+            <div>{props.info.name}</div>
 
 
 

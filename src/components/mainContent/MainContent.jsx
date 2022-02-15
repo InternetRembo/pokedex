@@ -2,14 +2,18 @@ import React, {useEffect, useState} from "react";
 import classes from './MainContent.module.css'
 import PokemonItem from "./ PokemonItem/PokemonItem";
 import {useDispatch, useSelector} from "react-redux";
-import pokemonReducer, {GetPokemonInfoTC, GetPokemonItemsTC, loadMorePokemonsTC} from "../../redux/pokemon-reducer";
+import {getNextPageUrlAC, GetPokemonItemsTC, loadMorePokemonsTC} from "../../redux/pokemon-reducer";
 
 const MainContent = (props) => {
     const pokemonItems = useSelector((state) => state.pokemonReducer.pokemonItems) // тут мій запит
     const pokemonInfo = useSelector((state) => state.pokemonReducer.pokemonInfo)
+    const nextPageUrl = useSelector((state) => state.pokemonReducer.nextPageUrl)
     const dispatch = useDispatch()
-    const [pokemons, setPokemons] = useState(null) /// ????
     const [loading, setLoading] = useState(true)
+
+
+
+
 
 
     useEffect(async () => {
@@ -18,9 +22,17 @@ const MainContent = (props) => {
 
     }, [])
 
-    let showMore = (pokemonItems) => {
-        console.log(pokemonItems)
-        dispatch(loadMorePokemonsTC(pokemonItems.next))
+    useEffect(async () => {
+        await dispatch(getNextPageUrlAC(pokemonItems.next))
+    }, [pokemonItems.next])
+
+
+
+    let showMore = async () => {
+
+        await dispatch(loadMorePokemonsTC(nextPageUrl)) /// чи потрібен тут Асинк/Евейт?
+
+
     }
 
     return (<div> {
@@ -29,9 +41,9 @@ const MainContent = (props) => {
                 <div className={classes.main}>
 
 
-                    {pokemonItems.results?.map((item) => {
+                    {pokemonInfo?.map((item) => {
 
-                        return <PokemonItem key={item.name} pokemon={item}/>
+                        return <PokemonItem key={item.name} info={item}/>
                     })  // за допомогою тринарного виразу выдображаэмо pokemonItems коли вын буде доступний а до цього показуэмо прелоадер
                     }
                     <button className={'button'} onClick={showMore}>Show more
