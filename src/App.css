@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #99e038;
+    background-color: #32cd32;
 
 
 }
@@ -15,15 +15,16 @@ body, html {
 
 .wrapper {
 
-    background-color: #99e038;
+    background-color: rgba(50, 205, 50, 0.81);
     max-width: 1600px;
-    min-height: 90vh;
+    height: 100%;
     display: grid;
     margin: 10px auto;
     padding: 0 15px;
+    position: relative;
 
     grid-template-rows: 100px 1fr 50px ;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 1fr 40%;
     grid-template-areas:
             "header header"
     " main table"
@@ -35,18 +36,25 @@ body, html {
         max-width: 970px;
     }
 }
-@media (max-width: 992px) {
+@media (max-width: 994px) {
     .wrapper{
         max-width: 750px;
+        grid-template-areas:
+            "header header"
+    " table table"
+    "main main";
+
     }
 }
 @media (max-width: 767px) {
     .wrapper {
         max-width: none;
+
     }
 }
     @media (max-width: 600px) {
         .wrapper{
+
             max-width: none;
             display: grid;
             grid-template-rows: 80px  30% 50% 50px ;
